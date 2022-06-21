@@ -35,16 +35,7 @@
                 <h4>Que voulez-vous ajouter à votre liste de tâches ?</h4>
                 {{ form.text }}
                 <h4>Choisissez une catégorie</h4>
-                <div class="options">
-                    <select name="category" class="input">
-                        {% for categ in category %}
-                    <option value="{{ categ.category_name }}">
-                       {{ categ.category_name }}
-                    </option>
-                        {% endfor %}
-                    </select>
-                </div>
-
+                    {{ category.categories }}
                 <input type="submit" value="Add todo" />
             </form>
         </section>

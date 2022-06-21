@@ -3,13 +3,13 @@ from django.views.decorators.http import require_POST
 
 # Create your views here.
 from toDoApp.forms import TodoForm, CategoryForm
-from toDoApp.models import TodoModel, Category, Checked, Favoris
+from toDoApp.models import TodoModel, Checked, Favoris, Category
 
 
 def index(request):
     todo_list = TodoModel.objects.order_by('id')
     form = TodoForm()
-    category = Category.objects.order_by('id')
+    category = CategoryForm()
     complete = Checked.objects.get(pk=1)
     todo_complete = complete.todomodel_set.all()
     favoris = Favoris.objects.get(pk=1)
@@ -21,10 +21,20 @@ def index(request):
 
 @require_POST
 def add_todo(request):
-    form = TodoForm(request.POST), CategoryForm(request.POST)
+    form = TodoForm(request.POST)
 
-    if form[0].is_valid() and form[1].is_valid():
-        new_todo = TodoModel(task=request.POST['text'], category=request.POST['category_name'])
+    if form.is_valid():
+        new_todo = TodoModel(task=request.POST['text'])
         new_todo.save()
 
     return redirect('index')
+
+
+def checked_todo(request, todo_id):
+    todo = TodoModel.objects.get(pk=todo_id)
+    todo.checked = True
+    todo.save()
+
+    return redirect('index')
+
+

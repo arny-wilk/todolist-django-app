@@ -6,18 +6,18 @@ from django.utils.text import slugify
 
 
 class Category(models.Model):
-    category_name = models.CharField(max_length=36)
+    name = models.CharField(max_length=36)
     slug = models.SlugField()
 
     class Meta:
         verbose_name = "Catégorie"
 
     def __str__(self):
-        return self.category_name
+        return self.name
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.category_name)
+            self.slug = slugify(self.name)
 
         super().save(*args, **kwargs)
 
