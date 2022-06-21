@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDoApp</title>
+    <!-- CSS Import  -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- End of CSS Import -->
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+	<!-- End of Fonts -->
+</head>
+<body>
+    {% block content %}
+    <!-- App Wrapper -->
+    <main class="app">
+        <!-- Salutation -->
+        <section class="greeting">
+            <h2 class="title">
+                Comment allez-vous,
+            </h2>
+        </section>
+        <!-- Fin de salutation -->
+
+        <!-- Nouvelle tâche -->
+        <section class="create-todo">
+            <h3>CREATE TODO</h3>
+            <form action="{% url 'add' %}" method="POST" role="form" id="new-todo-form">
+                {% csrf_token %}
+                <h4>Que voulez-vous ajouter à votre liste de tâches ?</h4>
+                {{ form.text }}
+                <h4>Choisissez une catégorie</h4>
+                <div class="options">
+                    <select name="category" class="input">
+                        {% for categ in category %}
+                    <option value="{{ categ.category_name }}">
+                       {{ categ.category_name }}
+                    </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <input type="submit" value="Add todo" />
+            </form>
+        </section>
+        <!-- End of New TodoList -->
+
+        <!-- TodoList -->
+        <section>
+            <h3>Liste des tâches</h3>
+                <ul>
+                    {% for task in todo_list %}
+                    <li>{{ task.task }}</li>
+                    {% endfor %}
+                </ul>
+        </section>
+        <!-- End of TodoList -->
+
+
+        <!-- TodoList Completed -->
+        <section>
+            <h3>Tâches terminées</h3>
+                <ul>
+                {% for task in todo_complete %}
+                    <li> {{ task.task }} </li>
+                </ul>
+                {% endfor %}}
+        </section>
+        <!-- End of TodoList -->
+
+        <!-- TodoList Favoris -->
+        <section>
+            <h3>Tâches Favorites</h3>
+                <ul>
+                    {% for task in todo_favoris %}
+                    <li> {{ task.task }} </li>
+                </ul>
+                {% endfor %}
+        </section>
+        {% endblock %}
+        <!-- End of TodoList -->
+
+</main>
+<!-- End of Wrapper -->
+
+<!-- JS Import -->
+
+<!-- End of JS Import -->
+
+</body>
+</html>
