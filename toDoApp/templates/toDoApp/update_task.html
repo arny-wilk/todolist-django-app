@@ -1,0 +1,12 @@
+{% extends 'toDoApp/index.html' %}
+{% block title %}
+Mettre à jour les tâches -
+{% endblock title %}
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ update_todo }}
+    <button type="submit">Mettre à jour</button>
+</form>
+{% endblock content %}

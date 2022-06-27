@@ -18,60 +18,64 @@
 <body>
     {% block content %}
     <!-- App Wrapper -->
-    <main class="app">
+    <main class="">
         <!-- Salutation -->
-        <section class="greeting">
-            <h2 class="title">
+        <section class="">
+            <h2 class="">
                 Comment allez-vous,
             </h2>
         </section>
         <!-- Fin de salutation -->
 
         <!-- Nouvelle tâche -->
-        <section class="create-todo">
+        <section class="">
             <h3>CREATE TODO</h3>
-            <form action="{% url 'add' %}" method="POST" role="form" id="new-todo-form">
+            <form action="{% url 'add' %}" method="POST" role="form" class="" id="todo-form">
                 {% csrf_token %}
                 <h4>Que voulez-vous ajouter à votre liste de tâches ?</h4>
-                {{ form.text }}
-                <h4>Choisissez une catégorie</h4>
-                    {{ category.categories }}
+                {{ form }}
+                <!--h4>Choisissez la catégorie</h4-->
                 <input type="submit" value="Add todo" />
             </form>
         </section>
         <!-- End of New TodoList -->
 
         <!-- TodoList -->
-        <section>
+        <section class="">
             <h3>Liste des tâches</h3>
-                <ul>
-                    {% for task in todo_list %}
-                    <li>{{ task.task }}</li>
-                    {% endfor %}
-                </ul>
-        </section>
-        <!-- End of TodoList -->
-
-
-        <!-- TodoList Completed -->
-        <section>
-            <h3>Tâches terminées</h3>
-                <ul>
-                {% for task in todo_complete %}
-                    <li> {{ task.task }} </li>
-                </ul>
-                {% endfor %}}
-        </section>
-        <!-- End of TodoList -->
-
-        <!-- TodoList Favoris -->
-        <section>
-            <h3>Tâches Favorites</h3>
-                <ul>
-                    {% for task in todo_favoris %}
-                    <li> {{ task.task }} </li>
-                </ul>
+            <div class="" id="todo-list">
+                {% for todo in todo_list %}
+                {% if todo.checked %}
+                <label class="todo-completed">{{ todo.task }}</label>
+                {% else %}
+                <label class="">{{ todo.task }} |
+                <a href="{% url 'update_todo' todo.id %}">Modifier</a>
+                </label>
+                {% endif %}
                 {% endfor %}
+            </div>
+        </section>
+        <!-- End of TodoList -->
+
+        <section class="">
+            <div class="" id="delete_complete">
+                <a href="{% url 'delete_complete' %}">
+                    <button type="button" class="">
+                    <i class=""></i>SUPPRIMER LES TACHES TERMINEES
+                    </button>
+                </a>
+
+            </div>
+        </section>
+
+        <section class="">
+            <div class="" id="delete_all">
+                <a href="{% url 'delete_all' %}">
+                    <button type="button" class="">
+                        <i class=""></i>SUPPRIMER TOUTES LES TACHES
+                    </button>
+                </a>
+            </div>
         </section>
         {% endblock %}
         <!-- End of TodoList -->

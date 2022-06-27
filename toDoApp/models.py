@@ -22,34 +22,14 @@ class Category(models.Model):
         super().save(*args, **kwargs)
 
 
-class Checked(models.Model):
-    checked = models.BooleanField(default=False)
-
-    class Meta:
-        verbose_name = "Tâches terminées"
-
-    def __str__(self):
-        return "(vide)" if self.checked else "Coché"
-
-
-class Favoris(models.Model):
-    favoris = models.BooleanField(default=False)
-
-    class Meta:
-        verbose_name = "Tâches favorites"
-
-    def __str__(self):
-        return "(vide)" if self.favoris else "Favoris"
-
-
 class TodoModel(models.Model):
-    category = models.ManyToManyField(Category)
-    checked = models.ManyToManyField(Checked, blank=True)
-    favoris = models.ManyToManyField(Favoris, blank=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     task = models.CharField(max_length=100)
+    category = models.ManyToManyField(Category)
     slug = models.SlugField()
     date = models.DateField(blank=True, null=True)
+    checked = models.BooleanField(default=False)
+    favoris = models.BooleanField(default=False)
     task_details = models.TextField(blank=True)
 
     class Meta:
@@ -57,7 +37,7 @@ class TodoModel(models.Model):
         ordering = ["date"]
 
     def __str__(self):
-        return self.task
+        return {self.task}
 
     def save(self, *args, **kwargs):
         if not self.slug:
