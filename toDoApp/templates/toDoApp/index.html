@@ -46,7 +46,7 @@
             <div class="" id="todo-list">
                 {% for todo in todo_list %}
                 {% if todo.checked %}
-                <label class="todo-completed">{{ todo.task }}</label>
+                <label class="">{{ todo.task }}</label>
                 {% else %}
                 <label class="">{{ todo.task }} |
                 <a href="{% url 'update_todo' todo.id %}">Modifier</a>
